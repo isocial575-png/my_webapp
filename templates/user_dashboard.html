@@ -74,7 +74,8 @@ a.logout:hover {
 
     {% if status == "accepted" and recovery_code %}
         <p>❗ الرجاء أخذ Screenshot لهذا الكود (استخدمه بحال نسيت الباسورد): {{ recovery_code }}</p>
-        <p class="info">البرنامج سيبدأ تلقائياً بعد 10 ثواني.</p>
+        <p>اضغط الزر لتشغيل البرنامج:</p>
+        <a href="/run_script" class="btn">تشغيل wabume</a>
     {% endif %}
 
     <a class="logout" href="{{ url_for('logout') }}">تسجيل الخروج</a>

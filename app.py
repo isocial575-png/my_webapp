@@ -229,31 +229,11 @@ def user_dashboard():
         return redirect(url_for("login"))
 
     # status == accepted
-    if sent_msg == 0:
-        # أول login بعد accept → أرسل رسالة الكود
-        cursor.execute("UPDATE users SET sent_msg=1 WHERE id=?", (user_id,))
-        conn.commit()
-        conn.close()
-
-        # دالة لتشغيل البرنامج بعد 10 ثواني
-        def run_script():
-            time.sleep(10)
-            subprocess.Popen(["python", script_path])
-
-        threading.Thread(target=run_script).start()
-
-        # عرض صفحة بها الكود وانتظار المستخدم لعمل SS
-        return render_template("user_dashboard.html",
-                               username=username,
-                               status=status,
-                               recovery_code=code)
-
-    else:
-        # أي login بعد الأول → فتح البرنامج مباشرة بدون أي صفحة
-        conn.close()
-        subprocess.Popen(["python", script_path])
-        return "", 204  # لا تعرض أي HTML
-
+    return render_template("user_dashboard.html",
+                           username=username,
+                           status=status,
+                           recovery_code=code,
+                           program_file=url_for('static', filename='automation/wabume.py'))
 
 # ----------------- Admin Accept / Reject -----------------
 @app.route("/admin_action", methods=["POST"])
