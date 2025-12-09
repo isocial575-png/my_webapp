@@ -7,6 +7,10 @@ import subprocess
 app = Flask(__name__)
 app.secret_key = "secretkey123"  # لتشفير session
 
+@app.route('/')
+def home():
+    return render_template('login.html')  # أو أي صفحة موجودة
+
 DB_PATH = "database/users.db"
 
 # ----------------- Signup -----------------
@@ -306,6 +310,3 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
 
-@app.route('/')
-def home():
-    return render_template('signup.html')  # سيعرض صفحة تسجيل الدخول
