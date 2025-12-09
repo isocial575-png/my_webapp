@@ -292,7 +292,7 @@ def admin_action():
     conn.close()
     flash("خطأ غير متوقع.", "error")
     return redirect(url_for("admin_dashboard"))
-    
+  
 # ----------------- Logout -----------------
 @app.route("/logout")
 def logout():
@@ -305,3 +305,7 @@ def logout():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
+@app.route('/')
+def home():
+    return render_template('signup.html')  # سيعرض صفحة تسجيل الدخول
