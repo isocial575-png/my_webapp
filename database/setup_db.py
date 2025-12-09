@@ -76,4 +76,20 @@ conn.commit()
 conn.close()
 
 
-# ----------------- downloaded -----------------
+# ----------------- downloaded row -----------------
+import sqlite3
+
+DB_PATH = "database/users.db"
+
+conn = sqlite3.connect(DB_PATH)
+cursor = conn.cursor()
+
+# إضافة العمود إذا لم يكن موجود مسبقًا
+try:
+    cursor.execute("ALTER TABLE users ADD COLUMN downloaded INTEGER DEFAULT 0")
+    print("تم إضافة العمود downloaded بنجاح")
+except sqlite3.OperationalError:
+    print("العمود downloaded موجود مسبقًا")
+
+conn.commit()
+conn.close()

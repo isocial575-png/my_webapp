@@ -22,23 +22,34 @@ def google_verify():
 def sitemap():
     return send_from_directory('.', 'sitemap.xml')
 
+
+#لتشغيل البرنامج (لو موجود على جهاز اليوزر):
 @app.route("/run_app")
 def run_app():
-    user_id = session["user_id"]
+    user_id = session.get("user_id")
+    if not user_id:
+        flash("يجب تسجيل الدخول أولاً!", "error")
+        return redirect(url_for("login"))
 
+    # المسار المتوقع للبرنامج على جهاز اليوزر
     program_path = os.path.expanduser("~/WaBuMe/wabume.py")
 
     if os.path.exists(program_path):
-        os.system(f"start python {program_path}")
+        os.system(f"start python {program_path}")  # Windows
     else:
-        # ما لقى الملف → رجّع اليوزر يحمل البرنامج
+        # إذا الملف غير موجود → يرجع للصفحة لتحميله
         return redirect(url_for("user_dashboard"))
 
-    return "جاري تشغيل التطبيق..."
+    return "جاري ت" \
+    "شغيل التطبيق..."
 
+#لتعليم أن اليوزر نزّل البرنامج:
 @app.route("/mark_downloaded")
 def mark_downloaded():
-    user_id = session["user_id"]
+    user_id = session.get("user_id")
+    if not user_id:
+        flash("يجب تسجيل الدخول أولاً!", "error")
+        return redirect(url_for("login"))
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -47,7 +58,6 @@ def mark_downloaded():
     conn.close()
 
     return redirect(url_for("user_dashboard"))
-
 
 
 DB_PATH = "database/users.db"
@@ -85,8 +95,8 @@ def signup():
             return render_template("signup.html")
 
         cursor.execute("""
-            INSERT INTO users (username, password, role, status, created_at)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO users (username, password, role, status, created_at, downloaded)
+            VALUES (?, ?, ?, ?, ?, 0)
         """, (username, password, "user", "pending", datetime.now()))
 
         conn.commit()
