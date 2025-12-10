@@ -77,14 +77,13 @@ a.logout:hover {
 
         {% if not downloaded %}
         <p>❗ الرجاء تحميل البرنامج لأول مرة:</p>
-        <a href="{{ program_file }}" download onclick="window.location.href='/mark_downloaded'">
-        تحميل WaBuMe.zip
-        </a>
+        <a class="btn" href="{{ program_file }}" download>تحميل WaBuMe.zip</a>
+        <br><br>
+        <a class="btn" href="{{ url_for('mark_downloaded') }}">تم التنزيل؟ اضغط هنا</a>
+
         {% else %}
-        <p>🔄 يتم فتح البرنامج تلقائياً...</p>
-        <script>
-            window.location.href = "/run_app";
-        </script>
+        <p>✅ تم تنزيل البرنامج! يمكنك تشغيله الآن:</p>
+        <a class="btn" href="{{ url_for('run_app') }}">تشغيل البرنامج</a>
         {% endif %}
     {% endif %}
 

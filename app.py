@@ -23,6 +23,9 @@ def sitemap():
     return send_from_directory('.', 'sitemap.xml')
 
 
+
+
+#------------------------------------------------------
 #لتشغيل البرنامج (لو موجود على جهاز اليوزر):
 @app.route("/run_app")
 def run_app():
@@ -57,7 +60,13 @@ def mark_downloaded():
     conn.commit()
     conn.close()
 
+    flash("تم تنزيل الملف بنجاح! يمكنك الآن تشغيل البرنامج.", "success")
     return redirect(url_for("user_dashboard"))
+#------------------------------------------------------
+
+
+
+
 
 
 DB_PATH = "database/users.db"
