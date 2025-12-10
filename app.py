@@ -57,8 +57,8 @@ def signup():
             return render_template("signup.html")
 
         cursor.execute("""
-            INSERT INTO users (username, password, role, status, created_at, downloaded)
-            VALUES (?, ?, ?, ?, ?, 0)
+            INSERT INTO users (username, password, role, status, created_at)
+            VALUES (?, ?, ?, ?, ?)
         """, (username, password, "user", "pending", datetime.now()))
 
         conn.commit()
