@@ -22,7 +22,7 @@ def google_verify():
 def sitemap():
     return send_from_directory('.', 'sitemap.xml')
 
-
+DB_PATH = "database/users.db"
 
 
 #------------------------------------------------------
@@ -64,12 +64,6 @@ def mark_downloaded():
     return redirect(url_for("user_dashboard"))
 #------------------------------------------------------
 
-
-
-
-
-
-DB_PATH = "database/users.db"
 
 # ----------------- Signup -----------------
 @app.route("/signup", methods=["GET", "POST"])
@@ -345,4 +339,4 @@ def logout():
 # ----------------- Run App -----------------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
