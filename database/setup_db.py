@@ -3,15 +3,15 @@ import os
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 
-# ----------------- إعداد المسار لقاعدة البيانات -----------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # نفس مسار هذا السكريبت
+# -----------------  Set database path  -----------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))      # Same directory as this script
 DB_PATH = os.path.join(BASE_DIR, "users.db")
 
-# ----------------- إنشاء اتصال بالـ DB -----------------
+# ----------------- Connect to the DB -----------------
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
-# ----------------- إنشاء جدول المستخدمين إذا لم يكن موجود -----------------
+# ----------------- Create users table if it doesn't exist -----------------
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS users (
 )
 """)
 
-# ----------------- إنشاء حساب Admin افتراضي -----------------
+# ----------------- Create default Admin account -----------------
 admin_username = "admin"
-admin_password = generate_password_hash("admin123")  # تشفير الباسورد
+admin_password = generate_password_hash("admin123")   # Encrypt password
 
 cursor.execute("""
 INSERT OR IGNORE INTO users (username, password, role, status, created_at)
@@ -38,18 +38,24 @@ conn.close()
 print("Database created successfully! ✅")
 print(f"Admin account -> Username: {admin_username} | Password: admin123")
 
-# ----------------- إضافة عمود recovery_code لو مش موجود -----------------
+# ----------------- Add recovery_code column if it doesn't exist -----------------
 DB_PATH = "database/users.db"
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
-# إضافة recovery_code لو مش موجود
 try:
     cursor.execute("ALTER TABLE users ADD COLUMN recovery_code TEXT")
 except:
     pass
 
-# إضافة sent_msg لو مش موجود (الأهم)
+conn.commit()
+conn.close()
+
+# ----------------- Add sent_msg column again if needed -----------------
+DB_PATH = "database/users.db"
+conn = sqlite3.connect(DB_PATH)
+cursor = conn.cursor()
+
 try:
     cursor.execute("ALTER TABLE users ADD COLUMN sent_msg INTEGER DEFAULT 0")
 except:
@@ -58,13 +64,13 @@ except:
 conn.commit()
 conn.close()
 
-# ----------------- إضافة عمود sent_msg لو مش موجود -----------------
+# ----------------- Add downloaded column if it doesn't exist -----------------
 DB_PATH = "database/users.db"
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
 try:
-    cursor.execute("ALTER TABLE users ADD COLUMN sent_msg INTEGER DEFAULT 0")
+    cursor.execute("ALTER TABLE users ADD COLUMN downloaded INTEGER DEFAULT 0")
 except:
     pass
 

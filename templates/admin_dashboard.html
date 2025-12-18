@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>WaBuMe - لوحة إدارة المستخدمين</title>
+<title>WaBuMe - User Management Dashboard</title>
     <meta name="description" content="WaBuMe: إرسال رسائل واتساب بالجملة بسهولة وسرعة | Send WhatsApp messages in bulk easily and fast.">
     <meta name="keywords" content="WaBuMe, رسائل واتساب, واتساب بالجملة, إرسال رسائل, WhatsApp bulk, WhatsApp messages">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,7 +93,7 @@ a.logout:hover {
 <body>
 
 <div class="container">
-    <h2>لوحة إدارة المستخدمين</h2>
+    <h2>User Management Dashboard</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -105,11 +105,12 @@ a.logout:hover {
       {% endif %}
     {% endwith %}
 
-<h3>طلبات التسجيل الجديدة:</h3>
+<!-- New Registration Requests -->
+<h3>New Registration Requests:</h3>
 <table>
   <tr>
     <th>Username</th>
-    <th>تاريخ التسجيل</th>
+    <th>Registration Date</th>
     <th>Action</th>
   </tr>
   {% for user in pending_users %}
@@ -119,31 +120,33 @@ a.logout:hover {
     <td>
       <form method="POST" action="{{ url_for('admin_action') }}">
         <input type="hidden" name="user_id" value="{{ user[0] }}">
-        <button name="action" value="accept">قبول</button>
-        <button name="action" value="reject">رفض</button>
+        <button name="action" value="accept">Accept</button>
+        <button name="action" value="reject">Reject</button>
       </form>
     </td>
   </tr>
   {% endfor %}
 </table>
 
-    <h3>المستخدمون القدامى</h3>
+    <!-- Existing Users -->
+    <h3>Existing Users:</h3>
     <table>
         <tr>
-            <th> اسم المستخدم </th>
-            <th> تاريخ التسجي </th>
+            <th>Username</th>
+            <th>Registration Date</th>
             <th> Details </th>
         </tr>
         {% for user in accepted_users %}
         <tr>
             <td>{{ user[1] }}</td>  <!-- username -->
             <td>{{ user[4] }}</td>  <!-- created_at -->
-            <td><a href="{{ url_for('user_details', user_id=user[0]) }}">Details</a></td>
+            <td><a href="{{ url_for('user_details', user_id=user[0]) }}">View Details</a></td>
         </tr>
         {% endfor %}
     </table>
 
-    <a class="logout" href="{{ url_for('logout') }}">تسجيل الخروج</a>
+    <!-- Logout -->
+    <a class="logout" href="{{ url_for('logout') }}">Logout</a>
 </div>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>لوحة المستخدمWaBuMe-</title>
+<title>WaBuMe - User Dashboard</title>
     <meta name="description" content="WaBuMe: إرسال رسائل واتساب بالجملة بسهولة وسرعة | Send WhatsApp messages in bulk easily and fast.">
     <meta name="keywords" content="WaBuMe, رسائل واتساب, واتساب بالجملة, إرسال رسائل, WhatsApp bulk, WhatsApp messages">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,22 +62,27 @@ a.logout:hover {
 </head>
 <body>
 <div class="container">
-    <h2>أهلاً ومرحبا {{ username }}!</h2>
+    <h2>Welcome, {{ username }}!</h2>
 
-    <p>حالة حسابك: 
+    <p>Account Status: 
         <span class="{{ 'success' if status=='accepted' else ('error' if status=='rejected' else 'info') }}">{{ status }}</span>
     </p>
 
     {% if status != 'accepted' %}
-        <p class="info">سيتمكن المستخدمون من الوصول إلى النظام فقط بعد قبول الإدارة.</p>
+        <p class="info">Users will only be able to access the system after admin approval.</p>
     {% endif %}
 
     {% if status == "accepted" and recovery_code %}
-        <p>❗ الرجاء أخذ Screenshot لهذا الكود (استخدمه بحال نسيت الباسورد): {{ recovery_code }}</p>
-        <p class="info">البرنامج سيبدأ تلقائياً بعد 10 ثواني.</p>
+        <p>⚠️ <strong>Important:</strong><br> 
+            Please take a screenshot of the recovery code below.<br>
+            You will need it if you forget your password.
+            the recovery code: {{ recovery_code }}
+        </p>
+
+        <a href="{{ url_for('download_page') }}">⬇ Download Program</a>
     {% endif %}
 
-    <a class="logout" href="{{ url_for('logout') }}">تسجيل الخروج</a>
+    <a class="logout" href="{{ url_for('logout') }}">Logout</a>
 </div>
 </body>
 </html>

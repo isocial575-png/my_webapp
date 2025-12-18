@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>تفاصيل المستخدمWaBuMe - </title>
+<title>WaBuMe - User Details</title>
     <meta name="description" content="WaBuMe: إرسال رسائل واتساب بالجملة بسهولة وسرعة | Send WhatsApp messages in bulk easily and fast.">
     <meta name="keywords" content="WaBuMe, رسائل واتساب, واتساب بالجملة, إرسال رسائل, WhatsApp bulk, WhatsApp messages">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,16 +59,18 @@ strong.user {
 </head>
 <body>
 <div class="container">
-    <h2> تفاصيل المستخدم:<strong class="user"> {{ username }} </strong> </h2>
+    <h2>User Details: <strong class="user"> {{ username }} </strong> </h2>
 
-    <p>تاريخ التسجيل: {{ created_at }}</p>
-    <p>حالة الحساب: {{ status }}</p>
+    <p>Registration Date: {{ created_at }}</p>
+    <p>Account Status: {{ status }}</p>
 
     {% if status == 'accepted' %}
-    <p>كود استرجاع كلمة المرور: <strong>{{ recovery_code }}</strong></p>
+    <p>Password Recovery Code: <strong>{{ recovery_code }}</strong></p>
     {% endif %}
-    <p>------------------------------------------------------------</p>
-    <h3>الرسائل المرسلة:</h3>
+
+    <hr>
+
+    <h3>Sent Messages:</h3>
     {% if messages %}
         <ul>
             {% for msg in messages %}
@@ -76,10 +78,10 @@ strong.user {
             {% endfor %}
         </ul>
     {% else %}
-        <p>لا توجد رسائل حتى الآن.</p>
+        <p>No messages yet.</p>
     {% endif %}
 
-    <a href="{{ url_for('admin_dashboard') }}">العودة للوحة الإدارة</a>
+    <a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a>
 </div>
 </body>
 </html>

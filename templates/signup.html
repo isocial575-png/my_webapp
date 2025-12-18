@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>WaBuMe - Create a New Account</title>
+    <title>WaBuMe - Create New Account</title>
         <meta name="description" content="WaBuMe: إرسال رسائل واتساب بالجملة بسهولة وسرعة | Send WhatsApp messages in bulk easily and fast.">
         <meta name="keywords" content="WaBuMe, رسائل واتساب, واتساب بالجملة, إرسال رسائل, WhatsApp bulk, WhatsApp messages">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,7 +107,7 @@
 <body>
 
 <div class="container">
-    <h2>إنشاء حساب جديد</h2>
+    <h2>Create New Account</h2>
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -120,11 +120,11 @@
         {% endif %}
     {% endwith %}
 
-    <!-- رسالة تحويل بعد التسجيل -->
+    <!-- Redirect message after registration -->
     {% if username_exists %}
         <p class="info">
-            سيتم تحويلك إلى صفحة تسجيل الدخول خلال  
-            <span id="countdown">5</span> ثوانٍ
+            You will be redirected to the login page in 
+            <span id="countdown">5</span> seconds.
         </p>
         <script>
             let timeLeft = 5;
@@ -143,16 +143,16 @@
     {% endif %}
 
     <form method="POST" action="{{ url_for('signup') }}">
-        <label>اسم المستخدم:</label><br>
+        <label>Username:</label><br>
         <input type="text" name="username" required><br><br>
 
-        <label>كلمة المرور:</label><br>
+        <label>Password:</label><br>
         <input type="password" name="password" required><br><br>
 
-        <button type="submit">إنشاء الحساب</button>
+        <button type="submit">Create Account</button>
     </form>
 
-    <p>لديك حساب؟ <a href="{{ url_for('login') }}">تسجيل الدخول</a></p>
+    <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
 </div>
 
 </body>
